@@ -22,7 +22,7 @@
     "build": "node build/updateDynamicCode.js",
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
-    "deploy": "vsce publish --pnpm",
+    "deploy": "vsce publish --yarn",
     "lint": "eslint src --ext ts"
   },
   "contributes": {
