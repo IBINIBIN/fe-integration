@@ -1,0 +1,77 @@
+{
+  "name": "fe-integration",
+  "displayName": "FE Integration",
+  "description": "",
+  "version": "0.0.1",
+  "publisher": "Jiabin",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/T-Tuan/fe-integration"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "compile": "tsc -p ./",
+    "build": "node build/updateDynamicCode.js",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "deploy": "vsce publish --pnpm",
+    "lint": "eslint src --ext ts"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "path": "./snippets/global.code-snippets"
+      },
+      {
+        "path": "./snippets/global-comment.code-snippets"
+      },
+      {
+        "path": "./snippets/javascript.code-snippets"
+      },
+      {
+        "path": "./snippets/vue.code-snippets"
+      }
+    ],
+    "commands": [
+      {
+        "command": "fe-integration.css.fs-8",
+        "title": "css 生成代码 fs-8 "
+      },
+      {
+        "command": "fe-integration.css.fs-10",
+        "title": "css 生成代码 fs-10 "
+      },
+      {
+        "command": "fe-integration.css.overflow-ellipsis",
+        "title": "css 生成代码 overflow-ellipsis "
+      },
+      {
+        "command": "fe-integration.css.multi-line-overflow-ellipsis",
+        "title": "css 生成代码 multi-line-overflow-ellipsis "
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.3",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.84.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.52.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "postcss": "^8.4.33",
+    "typescript": "^5.2.2"
+  }
+}
