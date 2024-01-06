@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
@@ -21,13 +21,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ">=16"
-        cache: "pnpm"
+        cache: "yarn"
     - run: |
-        pnpm i
-        pnpm build
-        pnpm compile
+        yarn
+        npm run  build
+        npm run compile
     - name: Publish
-      if: success() && startsWith(github.ref, 'refs/tags/')
+      if: success()
       run: npm run deploy
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}

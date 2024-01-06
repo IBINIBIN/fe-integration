@@ -1,9 +1,5 @@
 # FE Integration 
 
-## COMMAND
-> 通过命令生成对应代码
-
-
 ## snippets
 > 输入prefix会出现可使用的代码片段
 ### vue 模板 👇
