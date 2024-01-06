@@ -1,0 +1,33 @@
+name: publish package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+    - name: Use Node.js >=v16
+      uses: actions/setup-node@v3
+      with:
+        node-version: ">=16"
+        cache: "pnpm"
+    - run: |
+        pnpm i
+        pnpm build
+        pnpm compile
+    - name: Publish
+      if: success() && startsWith(github.ref, 'refs/tags/')
+      run: npm run deploy
+      env:
+        VSCE_PAT: ${{ secrets.VSCE_PAT }}
