@@ -9,6 +9,7 @@
   font-size: 12px;
   zoom: 0.8333;
 }
+
 /*---------------------------------------  fontSize -- end  ---------------------------------------*/
 
 /*======================================  ellipsis -- start  ======================================*/
@@ -22,8 +23,10 @@
 /* 多行文本溢出隐藏 */
 .multi-line-overflow-ellipsis {
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 设置显示行数 */
+  -webkit-line-clamp: 2;
+  /* 设置显示行数 */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 /*---------------------------------------  ellipsis -- end  ---------------------------------------*/
