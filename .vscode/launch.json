@@ -6,6 +6,15 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "getJsCodeList",
+			"program": "${workspaceFolder}/build/getJsCodeList.mjs",
+			"request": "launch",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node"
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",

@@ -2,7 +2,7 @@
   "name": "fe-integration",
   "displayName": "FE Integration",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "Jiabin",
   "engines": {
     "vscode": "^1.84.0"
@@ -12,13 +12,14 @@
     "url": "git+https://github.com/T-Tuan/fe-integration"
   },
   "categories": [
-    "Snippets"
+    "Snippets",
+    "Other"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
-    "compile": "tsc -p ./",
+    "compile": "npm run build && tsc -p ./",
     "build": "node build/updateDynamicCode.js",
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
@@ -42,20 +43,228 @@
     ],
     "commands": [
       {
+        "command": "fe-integration.js.options",
+        "title": "js (g) Panel - 代码片段生成选择器"
+      },
+      {
+        "command": "fe-integration.css.options",
+        "title": "css (g) Panel - 代码片段生成选择器"
+      },
+      {
         "command": "fe-integration.css.fs-8",
-        "title": "css 生成代码 fs-8 "
+        "title": "css (g) fs-8 - 生成代码片段"
       },
       {
         "command": "fe-integration.css.fs-10",
-        "title": "css 生成代码 fs-10 "
+        "title": "css (g) fs-10 - 生成代码片段"
       },
       {
         "command": "fe-integration.css.overflow-ellipsis",
-        "title": "css 生成代码 overflow-ellipsis "
+        "title": "css (g) overflow-ellipsis - 生成代码片段"
       },
       {
         "command": "fe-integration.css.multi-line-overflow-ellipsis",
-        "title": "css 生成代码 multi-line-overflow-ellipsis "
+        "title": "css (g) multi-line-overflow-ellipsis - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.camelToSnake",
+        "title": "js (g) camelToSnake - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.capitalize",
+        "title": "js (g) capitalize - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.catchError",
+        "title": "js (g) catchError - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.clampNumberWithinRange",
+        "title": "js (g) clampNumberWithinRange - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.formatNumber",
+        "title": "js (g) formatNumber - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.formatPrice",
+        "title": "js (g) formatPrice - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.generateRandomString",
+        "title": "js (g) generateRandomString - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.getArrayIntersection",
+        "title": "js (g) getArrayIntersection - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.getBasename",
+        "title": "js (g) getBasename - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.getFileExtension",
+        "title": "js (g) getFileExtension - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.getFileName",
+        "title": "js (g) getFileName - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isArray",
+        "title": "js (g) isArray - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isBlob",
+        "title": "js (g) isBlob - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isBoolean",
+        "title": "js (g) isBoolean - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isDate",
+        "title": "js (g) isDate - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isDef",
+        "title": "js (g) isDef - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isEmpty",
+        "title": "js (g) isEmpty - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isEmptyArray",
+        "title": "js (g) isEmptyArray - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isEmptyObject",
+        "title": "js (g) isEmptyObject - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isEmptyString",
+        "title": "js (g) isEmptyString - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isError",
+        "title": "js (g) isError - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isFunction",
+        "title": "js (g) isFunction - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isHasArray",
+        "title": "js (g) isHasArray - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isHasObject",
+        "title": "js (g) isHasObject - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isHasString",
+        "title": "js (g) isHasString - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isMap",
+        "title": "js (g) isMap - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isNonNullable",
+        "title": "js (g) isNonNullable - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isNull",
+        "title": "js (g) isNull - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isNullOrUndefined",
+        "title": "js (g) isNullOrUndefined - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isNumber",
+        "title": "js (g) isNumber - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isObject",
+        "title": "js (g) isObject - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isPromise",
+        "title": "js (g) isPromise - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isRegExp",
+        "title": "js (g) isRegExp - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isSet",
+        "title": "js (g) isSet - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isString",
+        "title": "js (g) isString - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isSymbol",
+        "title": "js (g) isSymbol - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isTargetInOptions",
+        "title": "js (g) isTargetInOptions - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isUndefined",
+        "title": "js (g) isUndefined - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isValueInRange",
+        "title": "js (g) isValueInRange - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.isWindow",
+        "title": "js (g) isWindow - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.numberToChinese",
+        "title": "js (g) numberToChinese - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.omit",
+        "title": "js (g) omit - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.once",
+        "title": "js (g) once - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.pick",
+        "title": "js (g) pick - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.snakeToCamel",
+        "title": "js (g) snakeToCamel - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.downloadFileByBlob",
+        "title": "js (g) downloadFileByBlob - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.getImageSize",
+        "title": "js (g) getImageSize - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.getLinesCountAfterInsertion",
+        "title": "js (g) getLinesCountAfterInsertion - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.listenClickOutside",
+        "title": "js (g) listenClickOutside - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.loadJS",
+        "title": "js (g) loadJS - 生成代码片段"
       }
     ]
   },
@@ -67,10 +276,18 @@
     "@typescript-eslint/parser": "^6.9.0",
     "@vscode/test-electron": "^2.3.6",
     "@vscode/vsce": "^2.22.0",
+    "acorn": "^8.11.3",
+    "acorn-walk": "^8.3.1",
+    "axios": "^1.6.5",
+    "esbuild": "^0.19.11",
+    "escodegen": "^2.1.0",
     "eslint": "^8.52.0",
+    "esm": "^3.2.25",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
+    "lodash-es": "^4.17.21",
     "mocha": "^10.2.0",
+    "node-fetch": "^3.3.2",
     "postcss": "^8.4.33",
     "typescript": "^5.2.2"
   }
