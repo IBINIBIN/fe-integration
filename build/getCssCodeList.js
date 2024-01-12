@@ -17,22 +17,26 @@ async function main() {
       ast.walkRules((decl) => {
         const prevDecl = decl.prev();
         let commentCode = "";
+        let commentText = "";
+
         if (prevDecl.type === "comment") {
           const preEndLine = prevDecl.source.end.line;
           const curStartLine = decl.source.start.line;
           if (curStartLine - preEndLine === 1) {
-            commentCode = `${prevDecl.toString()}\n`;
+            commentText = prevDecl.text;
+            commentCode = `${prevDecl.toString()}`;
           }
         }
 
         const fileName = decl.selector.slice(1);
-        const cssSingleClass = `${decl.toString()}\n`;
+        const cssSingleClass = `${decl.toString()}`;
 
-        const cssCode = `${commentCode}${cssSingleClass}`;
+        const cssCode = `${commentCode}\n${cssSingleClass}\n`;
         cssCodeList.push({
           code: cssCode,
           type: "css",
           name: fileName,
+          intro: commentText,
         });
       });
     } catch (error) {}
