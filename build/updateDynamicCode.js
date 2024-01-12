@@ -38,7 +38,9 @@ async function updatePackage(list) {
 
   const commandList = list.map((item) => {
     // let title = `${item.type} ${item.name} - 生成代码`;
-    let title = `${item.type} (g) ${item.name} - 生成代码片段`;
+    let title = `${item.type} (g) ${item.name} - ${
+      item.intro ? item.intro : "生成代码片段"
+    }`;
     return {
       command: `${packageName}.${item.type}.${item.name}`,
       title,
