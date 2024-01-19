@@ -1,3 +1,6 @@
+import { fileURLToPath } from "node:url";
+import fs from "fs-extra";
+import path from "node:path";
 import { parse } from "acorn";
 import { simple } from "acorn-walk";
 import { rollup } from "rollup";
@@ -5,11 +8,13 @@ import axios from "axios";
 import virtual from "@rollup/plugin-virtual";
 import { Project, printNode } from "ts-morph";
 
+// const ROOT_PATH = fileURLToPath(new URL("../../../", import.meta.url));
+
 const jsSourceCodeLinkList = [
-  // "https://cdn.jsdelivr.net/npm/@utilslib/core/lib/index.esm.js",
-  // "https://cdn.jsdelivr.net/npm/@utilslib/dom/lib/index.esm.js",
   "https://unpkg.com/@utilslib/core/lib/index.esm.js",
   "https://unpkg.com/@utilslib/dom/lib/index.esm.js",
+  // path.join(ROOT_PATH, "packages/core/lib/index.esm.js"),
+  // path.join(ROOT_PATH, "packages/dom/lib/index.esm.js"),
 ];
 
 function getClearExportDescHandle(code, exportName) {
@@ -27,6 +32,13 @@ function getClearExportDescHandle(code, exportName) {
 
 const introMap = {};
 
+/**
+ * 去除其他export方法的注释
+ * export只保留exportName
+ * @param {String} code
+ * @param {String} exportName
+ * @returns String
+ */
 function astHandle(code, exportName) {
   const project = new Project();
 
@@ -61,15 +73,15 @@ function astHandle(code, exportName) {
   // 删除其他export
   const ns = sourceFile.getDescendantsOfKind(278);
   for (const node of ns) {
-    node.compilerNode.exportClause.elements =
-      node.compilerNode.exportClause.elements.filter(
-        (n) => n.name.escapedText === exportName
-      );
+    node.compilerNode.exportClause.elements = node.compilerNode.exportClause.elements.filter(
+      (n) => n.name.escapedText === exportName
+    );
   }
 
   return printNode(sourceFile.compilerNode);
 }
 
+/** 除屑优化 */
 async function getTreeShakingCode(code) {
   const bundle = await rollup({
     input: "virtual-input.js",
@@ -85,6 +97,7 @@ async function getTreeShakingCode(code) {
   return output[0].code;
 }
 
+/** 获取export列表 */
 async function getExportList(code) {
   let exportList = [];
   const ast = parse(code, {
@@ -101,18 +114,27 @@ async function getExportList(code) {
   return exportList;
 }
 
+async function getSourceCode(url) {
+  // const code = await fs.readFile(url, "utf-8");
+  const { data: code } = await axios.get(url);
+
+  return code;
+}
+
 async function main() {
   let jsCodeList = [];
   for (const url of jsSourceCodeLinkList) {
     console.log(`url: `, url);
-    const { data: code } = await axios.get(url);
-    const code1 = code;
+    const code = await getSourceCode(url);
 
+    // 获取所有export变量
     let exportList = await getExportList(code);
     for (const exportName of exportList) {
-      const dddd = await astHandle(code1, exportName);
-      const newCode = await getTreeShakingCode(dddd);
-      const latestCode = await getClearExportDescHandle(newCode);
+      console.log(`exportName: `, exportName);
+      let latestCode = code;
+      latestCode = await astHandle(latestCode, exportName);
+      latestCode = await getTreeShakingCode(latestCode);
+      latestCode = await getClearExportDescHandle(latestCode);
       jsCodeList.push({
         code: latestCode,
         type: "js",
