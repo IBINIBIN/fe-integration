@@ -2,7 +2,7 @@
   "name": "fe-integration",
   "displayName": "FE Integration",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "Jiabin",
   "engines": {
     "vscode": "^1.84.0"
@@ -15,15 +15,17 @@
     "Snippets",
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "scripts": {
-    "vscode:prepublish": "pnpm run compile",
+    "vscode:prepublish": "npm run compile",
     "compile": "npm run build && tsc -p ./",
     "build": "node build/updateDynamicCode.js",
     "watch": "tsc -watch -p ./",
-    "pretest": "pnpm run compile && pnpm run lint",
-    "deploy": "vsce publish --yarn",
+    "pretest": "npm run compile && npm run lint",
+    "deploy": "vsce publish --no-dependencies",
     "lint": "eslint src --ext ts"
   },
   "devDependencies": {

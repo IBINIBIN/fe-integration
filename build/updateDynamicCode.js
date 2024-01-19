@@ -11,10 +11,7 @@ async function updateExtension(list) {
   const fileContent = await fs.readFile(filePath, "utf-8");
 
   // 在文件内容中找到要修改的变量
-  const regex = new RegExp(
-    `(const\\s+${variableName}.+?=\\s*)(.*?)(// codeList -- end)`,
-    "s"
-  );
+  const regex = new RegExp(`(const\\s+${variableName}.+?=\\s*)(.*?)(// codeList -- end)`, "s");
   const match = fileContent.match(regex);
 
   if (match[1]) {
@@ -37,10 +34,7 @@ async function updatePackage(list) {
   const match = fileContent.match(regex);
 
   const commandList = list.map((item) => {
-    // let title = `${item.type} ${item.name} - 生成代码`;
-    let title = `${item.type} (g) ${item.name} - ${
-      item.intro ? item.intro : "生成代码片段"
-    }`;
+    let title = `${item.type} (g) ${item.name} - ${item.intro ? item.intro : "生成代码片段"}`;
     return {
       command: `${packageName}.${item.type}.${item.name}`,
       title,
