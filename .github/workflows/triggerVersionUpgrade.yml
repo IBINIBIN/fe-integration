@@ -24,16 +24,7 @@ jobs:
       - name: Upgrade
         run: |
           npm version patch
-
-      - name: Commit and push
-        run: |
-          git add .
-      - name: Commit and push
-        run: |
           git push
-      - name: Commit and push
-        run: |
-          git commit -m"feat: update patch"
 
   trigger:
     runs-on: ubuntu-latest
