@@ -3,13 +3,14 @@ name: update package version and trigger publish
 on:
   workflow_dispatch:
 
+permissions: write-all
+
 env:
   npm_org: \@utilslib
 
 jobs:
   pushVersionCode:
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - uses: actions/checkout@v4
         with:
