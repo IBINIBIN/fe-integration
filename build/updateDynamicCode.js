@@ -63,10 +63,25 @@ async function updatePackage(list) {
   }
 }
 
+function deduplicateArray(arr) {
+  let map = {};
+  arr.forEach((item) => {
+    if (map[item.name]) {
+      let count = 1;
+      while (map[`${item.name} - ${count}`]) {
+        count++;
+      }
+      item.name = `${item.name} - ${count}`;
+    }
+    map[item.name] = true;
+  });
+  return arr;
+}
+
 async function main() {
   const list = await getCssCodeList();
   const getJsCodeList = (await import("./getJsCodeList.mjs")).default;
-  const jsList = await getJsCodeList();
+  const jsList = deduplicateArray(await getJsCodeList());
 
   updateExtension(list.concat(jsList));
   updatePackage(list.concat(jsList));

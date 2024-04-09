@@ -6,16 +6,24 @@ import { simple } from "acorn-walk";
 import { rollup } from "rollup";
 import axios from "axios";
 import virtual from "@rollup/plugin-virtual";
-import { Project, printNode } from "ts-morph";
+import { Project, printNode, SyntaxKind } from "ts-morph";
 
-// const ROOT_PATH = fileURLToPath(new URL("../../../", import.meta.url));
+const ROOT_PATH = fileURLToPath(new URL("../", import.meta.url));
 
-const jsSourceCodeLinkList = [
+let jsSourceCodeLinkList = [
   "https://unpkg.com/@utilslib/core/lib/index.esm.js",
   "https://unpkg.com/@utilslib/dom/lib/index.esm.js",
-  // path.join(ROOT_PATH, "packages/core/lib/index.esm.js"),
-  // path.join(ROOT_PATH, "packages/dom/lib/index.esm.js"),
 ];
+
+const isDEV = process.env.NODE_ENV === "dev";
+
+if (isDEV) {
+  jsSourceCodeLinkList = [
+    // 这里设置本地包链接
+    path.join(ROOT_PATH, "../utilslib/packages/core/lib/index.esm.js"),
+    path.join(ROOT_PATH, "../utilslib/packages/dom/lib/index.esm.js"),
+  ];
+}
 
 function getClearExportDescHandle(code, exportName) {
   const project = new Project({
@@ -41,34 +49,30 @@ const introMap = {};
  */
 function astHandle(code, exportName) {
   const project = new Project();
-
   const sourceFile = project.createSourceFile("这里随便输入.ts", code);
 
-  // 遍历源文件中的所有函数
-  sourceFile.getFunctions().forEach((func) => {
-    const ii = func.getName();
-    const jsDocs = func.getJsDocs();
+  /*======================================  仅保留需要导出方法的注释 -- start  ======================================*/
+  const curNode = sourceFile.getFunction(exportName) ?? sourceFile.getVariableStatement(exportName);
+  const curJSDocs = curNode?.getJsDocs?.();
+  const JSDoc = curJSDocs?.[0];
+  const structure = JSDoc?.getStructure();
+  // 保存注释头描述
+  introMap[exportName] = JSDoc?.getComment();
 
-    if (ii === exportName) {
-      // 存储一下方法的desc
-      const intro = jsDocs.map((jsDoc) => jsDoc.getComment()).join();
-      introMap[exportName] = intro;
-    } else {
-      // 删除其他方法的注释
-      try {
-        jsDocs.forEach((jsDoc) => jsDoc.remove?.());
-      } catch (err) {
-        // console.log(`err: `, err);
-      }
-    }
-  });
-
-  // 获取所有注释节点
-  const commentNodes = sourceFile.getDescendantsOfKind(3);
-  for (const item of commentNodes) {
-    const text = item.getText();
+  // 删除所有注释;
+  for (const item of [
+    ...sourceFile.getDescendantsOfKind(SyntaxKind.MultiLineCommentTrivia),
+    ...sourceFile.getDescendantsOfKind(SyntaxKind.JSDoc),
+  ]) {
     item.remove();
   }
+
+  if (structure) {
+    // 如果有JSDoc信息，返回给原方法
+    sourceFile.getFunction(exportName)?.addJsDoc(structure);
+    sourceFile.getVariableStatement(exportName)?.addJsDoc(structure);
+  }
+  /*---------------------------------------  仅保留需要导出方法的注释 -- end  ---------------------------------------*/
 
   // 删除其他export
   const ns = sourceFile.getDescendantsOfKind(278);
@@ -85,6 +89,10 @@ function astHandle(code, exportName) {
 async function getTreeShakingCode(code) {
   const bundle = await rollup({
     input: "virtual-input.js",
+    treeshake: {
+      moduleSideEffects: false,
+    },
+    external: [/.*/],
     plugins: [
       virtual({ "virtual-input.js": code }), // 使用虚拟文件插件
     ],
@@ -115,8 +123,13 @@ async function getExportList(code) {
 }
 
 async function getSourceCode(url) {
-  // const code = await fs.readFile(url, "utf-8");
-  const { data: code } = await axios.get(url);
+  let code;
+  if (isDEV) {
+    code = await fs.readFile(url, "utf-8");
+  } else {
+    let { data } = await axios.get(url);
+    code = data;
+  }
 
   return code;
 }
