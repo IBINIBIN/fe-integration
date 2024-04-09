@@ -23,6 +23,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "npm run build && tsc -p ./",
     "build": "node build/updateDynamicCode.js",
+    "build:dev": "cross-env NODE_ENV=dev node build/updateDynamicCode.js",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "deploy": "vsce publish --no-dependencies",
@@ -39,6 +40,7 @@
     "acorn": "^8.11.3",
     "acorn-walk": "^8.3.1",
     "axios": "^1.6.5",
+    "cross-env": "^7.0.3",
     "eslint": "^8.52.0",
     "esm": "^3.2.25",
     "fs-extra": "^11.2.0",
@@ -116,7 +118,7 @@
       },
       {
         "command": "fe-integration.js.formatPrice",
-        "title": "js (g) formatPrice - 获取文件名的后缀。,格式化价格，添加千位分隔符并保留指定的小数位数。"
+        "title": "js (g) formatPrice - 格式化价格，添加千位分隔符并保留指定的小数位数。"
       },
       {
         "command": "fe-integration.js.generateRandomString",
@@ -129,6 +131,10 @@
       {
         "command": "fe-integration.js.getBasename",
         "title": "js (g) getBasename - 从文件路径中提取文件名。"
+      },
+      {
+        "command": "fe-integration.js.getFileExtension",
+        "title": "js (g) getFileExtension - 获取文件名的后缀。"
       },
       {
         "command": "fe-integration.js.getFileName",
@@ -275,8 +281,52 @@
         "title": "js (g) snakeToCamel - 将蛇形变量名称转换为小驼峰命名。"
       },
       {
+        "command": "fe-integration.js.toArray",
+        "title": "js (g) toArray - 将值或值数组转换为数组。"
+      },
+      {
+        "command": "fe-integration.js.addClass",
+        "title": "js (g) addClass - 向元素添加一个或多个类名。"
+      },
+      {
+        "command": "fe-integration.js.attachListeners",
+        "title": "js (g) attachListeners - 创建一个用于管理事件监听器的工具函数"
+      },
+      {
+        "command": "fe-integration.js.clickOut",
+        "title": "js (g) clickOut - 监听点击事件，当点击元素在指定元素之外时执行回调函数。"
+      },
+      {
+        "command": "fe-integration.js.copyText",
+        "title": "js (g) copyText - 生成代码片段"
+      },
+      {
         "command": "fe-integration.js.downloadFile",
-        "title": "js (g) downloadFile - 下载一个 Blob 对象作为指定文件名的文件。"
+        "title": "js (g) downloadFile - 下载文件。"
+      },
+      {
+        "command": "fe-integration.js.downloadFileByBlob",
+        "title": "js (g) downloadFileByBlob - 下载一个 Blob 对象作为指定文件名的文件。"
+      },
+      {
+        "command": "fe-integration.js.downloadFileByUrl",
+        "title": "js (g) downloadFileByUrl - 下载一个 Blob 对象作为指定文件名的文件。"
+      },
+      {
+        "command": "fe-integration.js.easeInOutCubic",
+        "title": "js (g) easeInOutCubic - 生成代码片段"
+      },
+      {
+        "command": "fe-integration.js.elementInViewport",
+        "title": "js (g) elementInViewport - 检查元素是否在视口内。"
+      },
+      {
+        "command": "fe-integration.js.getAttach",
+        "title": "js (g) getAttach - 获取要附加到的节点元素。"
+      },
+      {
+        "command": "fe-integration.js.getElmCssPropValue",
+        "title": "js (g) getElmCssPropValue - 获取元素的指定CSS属性值。"
       },
       {
         "command": "fe-integration.js.getImageSize",
@@ -287,12 +337,80 @@
         "title": "js (g) getLinesCountAfterInsertion - 获取给定内容插入到指定 DOM 节点后，该节点在父容器中占据的行数。"
       },
       {
+        "command": "fe-integration.js.getScroll",
+        "title": "js (g) getScroll - 获取指定滚动目标的滚动距离。"
+      },
+      {
+        "command": "fe-integration.js.getScrollContainer",
+        "title": "js (g) getScrollContainer - 获取滚动容器元素。"
+      },
+      {
+        "command": "fe-integration.js.getScrollbarWidth",
+        "title": "js (g) getScrollbarWidth - 获取浏览器滚动条的宽度。"
+      },
+      {
+        "command": "fe-integration.js.getWindowScroll",
+        "title": "js (g) getWindowScroll - 获取当前视图滑动的距离"
+      },
+      {
+        "command": "fe-integration.js.getWindowSize",
+        "title": "js (g) getWindowSize - 获取窗口的尺寸。"
+      },
+      {
+        "command": "fe-integration.js.hasClass",
+        "title": "js (g) hasClass - 检查元素是否包含指定的类名。"
+      },
+      {
+        "command": "fe-integration.js.isFixed",
+        "title": "js (g) isFixed - 判断元素是否处在 position fixed 中"
+      },
+      {
+        "command": "fe-integration.js.isNodeOverflow",
+        "title": "js (g) isNodeOverflow - 检查节点是否发生溢出。"
+      },
+      {
+        "command": "fe-integration.js.isServer",
+        "title": "js (g) isServer - Thanks to https://spothero.com/static/main/uniform/docs-js/module-DOMUtils.html"
+      },
+      {
+        "command": "fe-integration.js.linear",
+        "title": "js (g) linear - 生成代码片段"
+      },
+      {
         "command": "fe-integration.js.listenClickOutside",
         "title": "js (g) listenClickOutside - 监听鼠标点击事件，如果点击事件不包含指定的元素，则触发回调函数，并返回一个销毁监听事件的方法。"
       },
       {
         "command": "fe-integration.js.loadJS",
         "title": "js (g) loadJS - 动态加载一组 JavaScript 文件。"
+      },
+      {
+        "command": "fe-integration.js.off",
+        "title": "js (g) off - 动态返回一个事件解绑函数，根据运行环境选择使用removeEventListener或detachEvent。"
+      },
+      {
+        "command": "fe-integration.js.on",
+        "title": "js (g) on - 动态返回一个事件绑定函数，根据运行环境选择使用addEventListener或attachEvent。"
+      },
+      {
+        "command": "fe-integration.js.once - 1",
+        "title": "js (g) once - 1 - 为指定节点的指定事件绑定一个只执行一次的事件处理函数。"
+      },
+      {
+        "command": "fe-integration.js.removeClass",
+        "title": "js (g) removeClass - 从元素中移除一个或多个类名。"
+      },
+      {
+        "command": "fe-integration.js.requestSubmit",
+        "title": "js (g) requestSubmit - 模拟提交表单操作。"
+      },
+      {
+        "command": "fe-integration.js.scrollSelectedIntoView",
+        "title": "js (g) scrollSelectedIntoView - 将选定的元素滚动到父元素的可视区域内。"
+      },
+      {
+        "command": "fe-integration.js.scrollTo",
+        "title": "js (g) scrollTo - 滚动到指定位置的异步函数。"
       }
     ]
   }

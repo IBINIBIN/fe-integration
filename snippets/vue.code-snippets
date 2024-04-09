@@ -122,7 +122,7 @@
     "scope": "vue",
     "prefix": ["vue-template-composition-ts"],
     "body": [
-      "<script lang=\"${2|js,jsx|}\">",
+      "<script lang=\"${2|ts,tsx|}\">",
       "export default {",
       "  name: \"${1:$TM_FILENAME_BASE}\"",
       "}",
