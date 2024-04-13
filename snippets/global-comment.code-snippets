@@ -6,6 +6,12 @@
     ],
     "description": "comment divider"
   },
+
+  "comment divider region": {
+    "prefix": "comment region",
+    "body": ["$LINE_COMMENT #region $1 -- start", "$2\n", "$LINE_COMMENT #endregion -- end", ""],
+    "description": "comment region"
+  },
   "comment divider section": {
     "prefix": "comment section",
     "body": [
