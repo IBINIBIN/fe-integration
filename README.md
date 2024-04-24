@@ -23,6 +23,7 @@
 | --------------- |
 | comment divider |
 | comment section |
+| comment region  |
 | comment start   |
 | comment end     |
 
