@@ -13,6 +13,13 @@
       "type": "node"
     },
     {
+      "name": "getTsCodeList",
+      "program": "${workspaceFolder}/build/getTsCodeList.mjs",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+    {
       "name": "getJsCodeList",
       "program": "${workspaceFolder}/build/getJsCodeList.mjs",
       "request": "launch",

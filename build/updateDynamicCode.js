@@ -49,6 +49,10 @@ async function updatePackage(list) {
     command: "fe-integration.js.options",
     title: "js (g) Panel - 代码片段生成选择器",
   });
+  commandList.unshift({
+    command: "fe-integration.ts.options",
+    title: "ts (g) Panel - 代码片段生成选择器",
+  });
 
   if (match[1]) {
     const modifiedContent = fileContent.replace(
@@ -79,12 +83,15 @@ function deduplicateArray(arr) {
 }
 
 async function main() {
-  const list = await getCssCodeList();
   const getJsCodeList = (await import("./getJsCodeList.mjs")).default;
-  const jsList = deduplicateArray(await getJsCodeList());
+  const getTsCodeList = (await import("./getTsCodeList.mjs")).default;
 
-  updateExtension(list.concat(jsList));
-  updatePackage(list.concat(jsList));
+  const cssSnippets = await getCssCodeList();
+  const jsSnippets = deduplicateArray(await getJsCodeList());
+  const tsSnippets = deduplicateArray(await getTsCodeList());
+
+  updateExtension(cssSnippets.concat(jsSnippets, tsSnippets));
+  updatePackage(cssSnippets.concat(jsSnippets, tsSnippets));
 }
 
 main();
