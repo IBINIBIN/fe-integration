@@ -23,7 +23,7 @@ if (isDEV) {
 async function getSourceCode(url) {
   let code;
   if (isDEV) {
-    code = await fs.readFile(url, "utf-8");
+    code = JSON.parse(await fs.readFile(url, "utf-8"));
   } else {
     let { data } = await axios.get(url);
     code = data;
@@ -37,7 +37,7 @@ async function main() {
   for (const url of sourceCodeLinkList) {
     console.log(`url: `, url);
     const snippets = await getSourceCode(url);
-    tsCodeList.push(...JSON.parse(snippets));
+    tsCodeList.push(...snippets);
   }
 
   return tsCodeList;
