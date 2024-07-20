@@ -2,6 +2,9 @@ name: publish package
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions: write-all
 
@@ -12,17 +15,6 @@ jobs:
       - name: Install jq
         run: sudo apt update && sudo apt install -y jq
       - uses: actions/checkout@v4
-
-      # - uses: pnpm/action-setup@v2
-      #   with:
-      #     version: 8
-      #     run_install: false
-
-      # - name: Use Node.js >=v16
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ">=16"
-      #     cache: "pnpm"
 
       - uses: actions/setup-node@v4
         with:
