@@ -2,7 +2,7 @@
   "comment divider": {
     "prefix": "comment divider",
     "body": [
-      "$BLOCK_COMMENT_START==========================================  $1  ==========================================$BLOCK_COMMENT_END"
+      "$BLOCK_COMMENT_START==========================================  $0  ==========================================$BLOCK_COMMENT_END"
     ],
     "description": "comment divider"
   },
@@ -11,7 +11,7 @@
     "prefix": "comment region",
     "body": [
       "$LINE_COMMENT #region ====================== $1 ======================",
-      "$2\n",
+      "$0\n",
       "$LINE_COMMENT #endregion -- end",
       ""
     ],
@@ -21,7 +21,7 @@
     "prefix": "comment section",
     "body": [
       "$BLOCK_COMMENT_START======================================  $1 -- start  ======================================$BLOCK_COMMENT_END",
-      "$2\n",
+      "$0\n",
       "$BLOCK_COMMENT_START---------------------------------------  $1 -- end  ---------------------------------------$BLOCK_COMMENT_END",
       ""
     ],
@@ -31,14 +31,14 @@
     "prefix": "comment start",
     "body": [
       "$BLOCK_COMMENT_START======================================  $1 -- start  ======================================$BLOCK_COMMENT_END",
-      "$2\n"
+      "$0\n"
     ],
     "description": "comment start"
   },
   "comment divider end": {
     "prefix": "comment end",
     "body": [
-      "$BLOCK_COMMENT_START---------------------------------------  $1 -- end  ---------------------------------------$BLOCK_COMMENT_END",
+      "$BLOCK_COMMENT_START---------------------------------------  $0 -- end  ---------------------------------------$BLOCK_COMMENT_END",
       ""
     ],
     "description": "comment end"
