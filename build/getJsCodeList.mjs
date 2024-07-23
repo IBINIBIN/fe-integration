@@ -13,6 +13,8 @@ const ROOT_PATH = fileURLToPath(new URL("../", import.meta.url));
 let jsSourceCodeLinkList = [
   "https://unpkg.com/@utilslib/core/lib/index.esm.js",
   "https://unpkg.com/@utilslib/dom/lib/index.esm.js",
+  "https://unpkg.com/@utilslib/vue2/lib/index.esm.js",
+  "https://unpkg.com/@utilslib/vue3/lib/index.esm.js",
 ];
 
 const isDEV = process.env.NODE_ENV === "dev";
@@ -22,6 +24,8 @@ if (isDEV) {
     // 这里设置本地包链接
     path.join(ROOT_PATH, "../utilslib/packages/core/lib/index.esm.js"),
     path.join(ROOT_PATH, "../utilslib/packages/dom/lib/index.esm.js"),
+    path.join(ROOT_PATH, "../utilslib/packages/vue2/lib/index.esm.js"),
+    path.join(ROOT_PATH, "../utilslib/packages/vue3/lib/index.esm.js"),
   ];
 }
 

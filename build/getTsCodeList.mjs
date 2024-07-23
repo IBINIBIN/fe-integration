@@ -8,6 +8,8 @@ const ROOT_PATH = fileURLToPath(new URL("../", import.meta.url));
 let sourceCodeLinkList = [
   "https://unpkg.com/@utilslib/core/lib/tsSnippets.json",
   "https://unpkg.com/@utilslib/dom/lib/tsSnippets.json",
+  "https://unpkg.com/@utilslib/vue2/lib/tsSnippets.json",
+  "https://unpkg.com/@utilslib/vue3/lib/tsSnippets.json",
 ];
 
 const isDEV = process.env.NODE_ENV === "dev";
@@ -17,6 +19,8 @@ if (isDEV) {
     // 这里设置本地包链接
     path.join(ROOT_PATH, "../utilslib/packages/core/lib/tsSnippets.json"),
     path.join(ROOT_PATH, "../utilslib/packages/dom/lib/tsSnippets.json"),
+    path.join(ROOT_PATH, "../utilslib/packages/vue2/lib/tsSnippets.json"),
+    path.join(ROOT_PATH, "../utilslib/packages/vue3/lib/tsSnippets.json"),
   ];
 }
 
