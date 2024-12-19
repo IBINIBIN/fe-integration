@@ -79,7 +79,7 @@ function astHandle(code, exportName) {
   /*---------------------------------------  仅保留需要导出方法的注释 -- end  ---------------------------------------*/
 
   // 删除其他export
-  const ns = sourceFile.getDescendantsOfKind(278);
+  const ns = sourceFile.getDescendantsOfKind(SyntaxKind.ExportDeclaration);
   for (const node of ns) {
     node.compilerNode.exportClause.elements = node.compilerNode.exportClause.elements.filter(
       (n) => n.name.escapedText === exportName
