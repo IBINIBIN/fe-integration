@@ -34,5 +34,11 @@
     "prefix": ["asiife", "iifeas"],
     "body": ["(async function() {", "  $0", "})();"],
     "description": "立即执行函数(异步)"
+  },
+  "json clone": {
+    "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": ["json clone", "clone json"],
+    "body": ["JSON.parse(JSON.stringify($0));"],
+    "description": "json 深拷贝"
   }
 }
