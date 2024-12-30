@@ -2,7 +2,7 @@
   "name": "fe-integration",
   "displayName": "FE Integration",
   "description": "",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "publisher": "Jiabin",
   "engines": {
     "vscode": "^1.84.0"
