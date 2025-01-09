@@ -1,9 +1,15 @@
 {
   "console log": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["lm", "logMsg"],
-    "body": ["console.log(`$CLIPBOARD: `, $0);"],
+    "prefix": ["lt", "logMsg"],
+    "body": ["console.log(`$CLIPBOARD: `, $0)"],
     "description": "log"
+  },
+  "console divider": {
+    "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": ["ld", "logDivider"],
+    "body": ["console.log('--------------------', `$CLIPBOARD: `, $0)"],
+    "description": "log divider"
   },
   "const": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
