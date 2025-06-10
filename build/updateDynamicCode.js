@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
-const getCssCodeList = require("./getCssCodeList.js").default;
+const getCssCodeList = require("./getCssCodeList.js");
 
 const filePath = path.resolve(process.cwd(), "src/extension.ts");
 const packagePath = path.resolve(process.cwd(), "package.json");
@@ -15,10 +15,7 @@ async function updateExtension(list) {
   const match = fileContent.match(regex);
 
   if (match[1]) {
-    const modifiedContent = fileContent.replace(
-      match[0],
-      `${match[1]}${JSON.stringify(list, 0, 2)}\n${match[3]}`
-    );
+    const modifiedContent = fileContent.replace(match[0], `${match[1]}${JSON.stringify(list, 0, 2)}\n${match[3]}`);
 
     // 写回文件
     await fs.writeFile(filePath, modifiedContent, "utf-8");
@@ -55,10 +52,7 @@ async function updatePackage(list) {
   });
 
   if (match[1]) {
-    const modifiedContent = fileContent.replace(
-      match[0],
-      `${match[1]}${JSON.stringify(commandList, 0, 6)}`
-    );
+    const modifiedContent = fileContent.replace(match[0], `${match[1]}${JSON.stringify(commandList, 0, 2)}`);
 
     // 写回文件
     await fs.writeFile(packagePath, modifiedContent, "utf-8");
@@ -82,7 +76,7 @@ function deduplicateArray(arr) {
   return arr;
 }
 
-async function main() {
+(async function () {
   const getJsCodeList = (await import("./getJsCodeList.mjs")).default;
   const getTsCodeList = (await import("./getTsCodeList.mjs")).default;
 
@@ -92,6 +86,4 @@ async function main() {
 
   updateExtension(cssSnippets.concat(jsSnippets, tsSnippets));
   updatePackage(cssSnippets.concat(jsSnippets, tsSnippets));
-}
-
-main();
+})();

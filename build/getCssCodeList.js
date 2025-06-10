@@ -1,48 +1,81 @@
-const postcss = require("postcss");
+// const postcss = require("postcss");
 const { globSync } = require("glob");
 const path = require("path");
 const fs = require("fs-extra");
+const prettier = require("prettier");
 
-async function main() {
-  let cssCodeList = [];
-  /** 获取所有css文件地址 */
-  const cssFilePaths = globSync("src/css/*.css").map((p) => path.resolve(p));
+const postcss = require("postcss");
+const selectorParser = require("postcss-selector-parser");
 
-  for (const i in cssFilePaths) {
-    const p = cssFilePaths[i];
+function extractFirstClass(selector) {
+  let firstClass = null;
 
-    try {
-      const css = await fs.readFile(p, "utf-8");
-      const ast = postcss.parse(css);
-      ast.walkRules((decl) => {
-        const prevDecl = decl.prev();
-        let commentCode = "";
-        let commentText = "";
+  const parser = selectorParser((selectors) => {
+    selectors.walkClasses((classNode) => {
+      if (!firstClass) {
+        firstClass = classNode.value;
+      }
+    });
+  });
 
-        if (prevDecl.type === "comment") {
-          const preEndLine = prevDecl.source.end.line;
-          const curStartLine = decl.source.start.line;
-          if (curStartLine - preEndLine === 1) {
-            commentText = prevDecl.text;
-            commentCode = `${prevDecl.toString()}`;
-          }
-        }
-
-        const fileName = decl.selector.slice(1);
-        const cssSingleClass = `${decl.toString()}`;
-
-        const cssCode = `${commentCode}\n${cssSingleClass}\n`;
-        cssCodeList.push({
-          code: cssCode,
-          type: "css",
-          name: fileName,
-          intro: commentText,
-        });
-      });
-    } catch (error) {}
-
-    return cssCodeList;
-  }
+  parser.processSync(selector);
+  return firstClass;
 }
 
-exports.default = main;
+async function extractStyleGroups(cssText) {
+  const root = postcss.parse(cssText);
+  const styleGroup = {};
+
+  root.walkRules((rule) => {
+    let commentCode = "";
+    let commentText = "";
+    const prevDecl = rule.prev();
+
+    if (prevDecl?.type === "comment") {
+      const preEndLine = prevDecl.source.end.line;
+      const curStartLine = rule.source.start.line;
+      if (curStartLine - preEndLine === 1) {
+        commentText = prevDecl.text;
+        commentCode = prevDecl.toString();
+      }
+    }
+
+    rule.selectors.forEach((sel) => {
+      const firstClass = extractFirstClass(sel);
+      if (!firstClass) return;
+
+      styleGroup[firstClass] ??= [];
+      styleGroup[firstClass].push({
+        commentText,
+        code: `${commentCode}\n${rule.toString()}`,
+      });
+    });
+  });
+
+  const result = await Promise.all(
+    Object.entries(styleGroup).map(async ([prefix, groups]) => {
+      const intro = groups.find(({ commentText }) => commentText)?.commentText ?? "";
+      const css = groups.map(({ commentText, code }) => code).join("");
+      const css2 = await prettier.format(css, { parser: "css" });
+      return {
+        code: css2,
+        type: "css",
+        name: prefix,
+        intro,
+      };
+    })
+  );
+
+  return result;
+}
+
+async function main() {
+  const cssFilePaths = globSync("src/css/*.css").map((p) => path.resolve(p));
+
+  return cssFilePaths.reduce(async (prev, cur) => {
+    const css = await fs.readFile(cur, "utf-8");
+    return prev.concat(await extractStyleGroups(css));
+  }, []);
+}
+
+module.exports = main;

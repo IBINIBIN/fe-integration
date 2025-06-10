@@ -22,6 +22,15 @@ jobs:
           git config user.name 'Jiabin'
           git config user.email 'ibin@qq.com'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "16"
+
+      - run: |
+          npm i -g pnpm@8
+          pnpm i
+          pnpm build
+
       - name: Upgrade
         run: |
           npm version patch

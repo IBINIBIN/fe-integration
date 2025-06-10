@@ -3,48 +3,48 @@
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
     "prefix": ["lt", "logMsg"],
     "body": ["console.log(`${CLIPBOARD/`/'/g}: `, $0)"],
-    "description": "log"
+    "description": "log",
   },
   "console divider": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
     "prefix": ["ld", "logDivider"],
     "body": ["console.log(`-------------------- ${CLIPBOARD/`/'/g}: `, $0)"],
-    "description": "log divider"
+    "description": "log divider",
   },
   "const": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
     "prefix": ["cs", "cst"],
-    "body": ["const ${1:name} = ${0:''};"],
-    "description": "const"
+    "body": ["const ${1:name} = ${0:''}"],
+    "description": "const",
   },
   "function": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
     "prefix": ["fuc", "func"],
     "body": ["function ${1:name}(${2:params}) {", "  $0", "}"],
-    "description": "function"
+    "description": "function",
   },
   "async function": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["asfuc", "asfunc"],
+    "prefix": ["asfuc", "asfunc", "func async"],
     "body": ["async function ${1:name}(${2:params}) {", "  $0", "}"],
-    "description": "async function"
+    "description": "async function",
   },
   "iife": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
     "prefix": ["iife"],
-    "body": ["(function() {", "  $0", "})();"],
-    "description": "立即执行函数"
+    "body": ["(function() {", "  $0", "})()"],
+    "description": "立即执行函数",
   },
   "iife async": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": ["asiife", "iifeas"],
-    "body": ["(async function() {", "  $0", "})();"],
-    "description": "立即执行函数(异步)"
+    "prefix": ["iife async", "asiife", "iifeas"],
+    "body": ["(async function() {", "  $0", "})()"],
+    "description": "立即执行函数(异步)",
   },
   "json clone": {
     "scope": "html,vue,javascript,typescript,javascriptreact,typescriptreact",
     "prefix": ["json clone", "clone json"],
-    "body": ["JSON.parse(JSON.stringify($0));"],
-    "description": "json 深拷贝"
-  }
+    "body": ["JSON.parse(JSON.stringify($0))"],
+    "description": "json 深拷贝",
+  },
 }
