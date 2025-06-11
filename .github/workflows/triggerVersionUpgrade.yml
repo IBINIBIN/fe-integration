@@ -26,14 +26,17 @@ jobs:
         with:
           node-version: "16"
 
+      - name: Upgrade
+        run: |
+          npm version patch
+
       - run: |
           npm i -g pnpm@8
           pnpm i
           pnpm build
 
-      - name: Upgrade
+      - name: push
         run: |
-          npm version patch
           git push
 
   trigger:
