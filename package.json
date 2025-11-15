@@ -3,7 +3,7 @@
   "type": "module",
   "displayName": "FE Integration",
   "description": "",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "publisher": "Jiabin",
   "engines": {
     "vscode": "^1.84.0"
