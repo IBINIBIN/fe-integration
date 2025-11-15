@@ -19,7 +19,7 @@ jobs:
       - name: Set up Git
         run: |
           git pull --rebase
-          git config user.name 'Jiabin'
+          git config user.name 'IBIN'
           git config user.email 'ibin@qq.com'
 
       - uses: actions/setup-node@v4

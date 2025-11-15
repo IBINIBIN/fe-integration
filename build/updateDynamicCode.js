@@ -1,6 +1,7 @@
-const fs = require("fs-extra");
-const path = require("path");
-const getCssCodeList = require("./getCssCodeList.js");
+import fs from "fs-extra";
+import path from "path";
+import getCssCodeList from "./getCssCodeList.js";
+import getCodeList from "./getCodeList.js";
 
 const filePath = path.resolve(process.cwd(), "src/extension.ts");
 const packagePath = path.resolve(process.cwd(), "package.json");
@@ -26,8 +27,8 @@ async function updateExtension(list) {
 async function updatePackage(list) {
   const fileContent = await fs.readFile(packagePath, "utf-8");
 
-  // 在文件内容中找到要修改的变量
-  const regex = new RegExp(`("commands":)(\\s*?\\[.*?\\])`, "s");
+  // 在文件内容中找到要修改的变量 - 优化正则表达式精确匹配到数组结束
+  const regex = new RegExp(`("commands":\\s*)(\\[[\\s\\S]*?\\])(\\s*})`, "s");
   const match = fileContent.match(regex);
 
   const commandList = list.map((item) => {
@@ -51,8 +52,8 @@ async function updatePackage(list) {
     title: "ts (g) Panel - 代码片段生成选择器",
   });
 
-  if (match[1]) {
-    const modifiedContent = fileContent.replace(match[0], `${match[1]}${JSON.stringify(commandList, 0, 2)}`);
+  if (match) {
+    const modifiedContent = fileContent.replace(match[0], `${match[1]}${JSON.stringify(commandList, 0, 6)}${match[3]}`);
 
     // 写回文件
     await fs.writeFile(packagePath, modifiedContent, "utf-8");
@@ -77,13 +78,15 @@ function deduplicateArray(arr) {
 }
 
 (async function () {
-  const getJsCodeList = (await import("./getJsCodeList.mjs")).default;
-  const getTsCodeList = (await import("./getTsCodeList.mjs")).default;
+  try {
+    const [cssSnippets, codeList] = await Promise.all([getCssCodeList(), getCodeList()]);
+    const jsSnippets = deduplicateArray(codeList.js);
+    const tsSnippets = deduplicateArray(codeList.ts);
 
-  const cssSnippets = await getCssCodeList();
-  const jsSnippets = deduplicateArray(await getJsCodeList());
-  const tsSnippets = deduplicateArray(await getTsCodeList());
-
-  updateExtension(cssSnippets.concat(jsSnippets, tsSnippets));
-  updatePackage(cssSnippets.concat(jsSnippets, tsSnippets));
+    updateExtension(cssSnippets.concat(jsSnippets, tsSnippets));
+    updatePackage(cssSnippets.concat(jsSnippets, tsSnippets));
+  } catch (error) {
+    console.error("Error updating dynamic code:", error);
+    process.exit(1);
+  }
 })();

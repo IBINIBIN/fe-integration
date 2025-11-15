@@ -1,5 +1,6 @@
 {
   "name": "fe-integration",
+  "type": "module",
   "displayName": "FE Integration",
   "description": "",
   "version": "0.0.34",

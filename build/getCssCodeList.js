@@ -1,11 +1,11 @@
-// const postcss = require("postcss");
-const { globSync } = require("glob");
-const path = require("path");
-const fs = require("fs-extra");
-const prettier = require("prettier");
+// import postcss from "postcss";
+import { globSync } from "glob";
+import path from "path";
+import fs from "fs-extra";
+import prettier from "prettier";
 
-const postcss = require("postcss");
-const selectorParser = require("postcss-selector-parser");
+import postcss from "postcss";
+import selectorParser from "postcss-selector-parser";
 
 function extractFirstClass(selector) {
   let firstClass = null;
@@ -78,4 +78,4 @@ async function main() {
   }, []);
 }
 
-module.exports = main;
+export default main;
