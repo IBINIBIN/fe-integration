@@ -47,4 +47,14 @@
     "body": ["JSON.parse(JSON.stringify($0))"],
     "description": "json 深拷贝",
   },
+  "import": {
+    "prefix": "imp",
+    "body": "import ${1:moduleName} from '${0:module}'",
+    "description": "Imports entire module statement in ES6 syntax",
+  },
+  "requireToConst": {
+    "prefix": "req",
+    "body": "const ${0:packageName} = require('${0:package}')",
+    "description": "Require a package to const",
+  },
 }
