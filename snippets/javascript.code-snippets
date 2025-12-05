@@ -57,4 +57,8 @@
     "body": "const ${0:packageName} = require('${0:package}')",
     "description": "Require a package to const",
   },
+  "reduce": {
+    "prefix": "reduce",
+    "body": "${1:array}.reduce((prev, cur) => {$0}, $2)",
+  },
 }
